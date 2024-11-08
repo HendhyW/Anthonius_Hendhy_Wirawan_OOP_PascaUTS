@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
             //kalau dikasi input ke atas, maka dikurang friction (friction ke bawah)
             if(moveDirection.y > 0){
-                yvel = Mathf.Clamp(moveDirection.y * moveVelocity.y* Time.fixedDeltaTime,0,maxSpeed.y) + GetFriction().y;
+                yvel = Mathf.Clamp(moveDirection.y * moveVelocity.y* Time.fixedDeltaTime,0,maxSpeed.y) +  GetFriction().y;
             }
             //kalau dikasi input ke bawah, maka ditambah friction (friction ke atas)
             else if(moveDirection.y < 0){
@@ -68,15 +68,29 @@ public class PlayerMovement : MonoBehaviour
             }
             xvel = Mathf.Clamp(xvel, -maxSpeed.x, maxSpeed.x);
             yvel = Mathf.Clamp(yvel, -maxSpeed.y, maxSpeed.y);
-            rb.velocity = new Vector2(xvel, yvel);
+            rb.velocity = new Vector2(-xvel, -yvel);
         }
         //kalau nggak dikasih input
         // Jika tidak ada input
     else 
     {
         // Kurangi kecepatan dengan stopFriction hingga mencapai nol
-        xvel = rb.velocity.x + GetFriction().x * Time.fixedDeltaTime;
-        yvel = rb.velocity.y + GetFriction().y * Time.fixedDeltaTime;
+        xvel = Mathf.Clamp((rb.velocity.x + GetFriction().x * Time.fixedDeltaTime), -maxSpeed.x, maxSpeed.x);
+        yvel = Mathf.Clamp((rb.velocity.y + GetFriction().y * Time.fixedDeltaTime), -maxSpeed.y, maxSpeed.y);
+
+        if(rb.velocity.x > 0){
+            xvel = Mathf.Clamp(rb.velocity.x + GetFriction().x * Time.fixedDeltaTime, 0, maxSpeed.x);
+        }
+        else if(rb.velocity.x < 0){
+            xvel = Mathf.Clamp(rb.velocity.x - GetFriction().x * Time.fixedDeltaTime, -maxSpeed.x, 0);
+        }
+
+        if(rb.velocity.y > 0){
+            yvel = Mathf.Clamp(rb.velocity.y + GetFriction().y * Time.fixedDeltaTime, 0, maxSpeed.y);
+        }
+        else if(rb.velocity.y < 0){
+            yvel = Mathf.Clamp(rb.velocity.y - GetFriction().y * Time.fixedDeltaTime, -maxSpeed.y, 0);
+        }
 
         // Jika kecepatan kurang dari stopClamp, set ke nol
         if (Mathf.Abs(xvel) < stopClamp.x)
@@ -89,18 +103,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Tetapkan kecepatan baru
-        rb.velocity = new Vector2(xvel, yvel);
+        rb.velocity = new Vector2(-xvel, -yvel);
     }
 
-        Debug.Log(moveDirection);
-        Debug.Log(xvel);
-        Debug.Log(yvel);
-        Debug.Log(rb.velocity);
+    MoveBound();
+
+        // Debug.Log(moveDirection);
+        // Debug.Log(xvel);
+        // Debug.Log(yvel);
+        // Debug.Log(rb.velocity);
     }
 
     public void MoveBound()
     {
-
+        //kasih boundary supaya pesawat gabisa keluar dari kamera
+        rb.position = new Vector2 (Mathf.Clamp(rb.position.x, -8.64f, 8.64f), Mathf.Clamp(rb.position.y, -5f, 4.64f));
     }
 
     public bool IsMoving()
