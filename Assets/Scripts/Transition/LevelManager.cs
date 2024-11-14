@@ -9,14 +9,20 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-
+        animator.enabled = false;
+        // Debug.Log("Masuk ke Awaker");
     }
 
     IEnumerator LoadSceneAsync(string sceneName)
     {
-        animator.SetTrigger("End");
+        // animator.SetTrigger("Start");
+        animator.enabled = true;
+        Debug.Log(animator);
+        animator.Play("Transition Start", 0 , 0.0f);
+        // animator.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(sceneName);
+        animator.Play("Transition end", 0 , 0.0f);
         Player.Instance.transform.position = new(0, -4.5f);
     }
 
