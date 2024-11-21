@@ -122,4 +122,4 @@ MonoBehaviour:
   parentTransform: {fileID: 0}
   shootIntervalInSeconds: 3
   bullet: {fileID: 457204747241193905, guid: 12a42ddbaf8f3de47ac132aa7c4f2d61, type: 3}
-  bulletSpawnPoint: {fileID: 0}
+  bulletSpawnPoint: {fileID: 7521821573788712692, guid: c99d397970e59fd438840f6985a184c8, type: 3}

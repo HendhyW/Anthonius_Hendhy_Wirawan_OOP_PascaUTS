@@ -1,30 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Pool;
 
 public class Weapon : MonoBehaviour
 {
     public Transform parentTransform;
     [Header("Weapon Stats")]
-    [SerializeField] private float shootIntervalInSeconds = 3f;
+    [SerializeField] private float shootIntervalInSeconds = 0.5f;
 
     [Header("Bullets")]
     public Bullet bullet;
-    [SerializeField] private Transform bulletSpawnPoint;
+    [SerializeField] public Transform bulletSpawnPoint;
 
     [Header("Bullet Pool")]
     private IObjectPool<Bullet> objectPool;
     private readonly bool collectionCheck = false;
     private readonly int defaultCapacity = 30;
     private readonly int maxSize = 100;
+    
     private float timer;
+
+    public Transform bulletSpawnPoint1;
 
     void Awake()
     {
-        Debug.Log("Awake Weapon");
-        bullet = GetComponent<Bullet>();
+        Assert.IsNotNull(bulletSpawnPoint);
         objectPool = new ObjectPool<Bullet>(CreateBullet, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject, collectionCheck, defaultCapacity, maxSize);
+        
     }
 
     //buat instance bullet 
@@ -32,7 +36,8 @@ public class Weapon : MonoBehaviour
     {
         Debug.Log("Create Bullet");
         Bullet bulletInstance = Instantiate(bullet);
-        bulletInstance.ObjectPool = objectPool;
+        bulletInstance.objectPool = objectPool;
+        bulletInstance.transform.parent = transform;
         return bulletInstance;
     }
 
@@ -57,18 +62,20 @@ public class Weapon : MonoBehaviour
     private void FixedUpdate()
     {
         // Debug.Log(timer);
-        // if(timer > shootIntervalInSeconds && objectPool != null){
-        //     Bullet bulletObject = objectPool.Get();
+        Debug.Log(shootIntervalInSeconds);
+        if(timer > shootIntervalInSeconds && objectPool != null){
+            Bullet bulletObject = objectPool.Get();
+        
 
-        //     if(objectPool == null){
-        //         return;
-        //     }
+            if(objectPool == null){
+                return;
+            }
 
-        //     // bulletObject.transform.position = bulletSpawnPoint.position;
-        //     bulletObject.transform.SetPositionAndRotation(bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+            // bulletObject.transform.position = bulletSpawnPoint.position;
+            bulletObject.transform.SetPositionAndRotation(bulletSpawnPoint.position, bulletSpawnPoint.rotation);
 
-        //     timer = 0f;
-        // }
-        // timer += Time.fixedDeltaTime;
+            timer = 0f;
+        }
+        timer += Time.fixedDeltaTime;
     }
 }

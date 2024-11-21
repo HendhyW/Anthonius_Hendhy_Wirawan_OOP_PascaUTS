@@ -37,11 +37,11 @@ public class EnemyBoss : MonoBehaviour
         float seed = Random.Range(0, 1); 
         //batas x = 8, batas y = 5
         if(seed < 5f){
-            rb.position = new Vector2(-8, Random.Range(0, 5));
+            rb.position = new Vector2(-8, Random.Range(1, 5));
             direction = -1;
         }
         else{
-            rb.position = new Vector2(8, Random.Range(0, 5));
+            rb.position = new Vector2(8, Random.Range(1, 5));
             direction = 1;
         }
     }
