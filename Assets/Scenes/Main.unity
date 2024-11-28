@@ -148,7 +148,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637129213}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &637129215
 Camera:
   m_ObjectHideFlags: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   timer: 0
   waveInterval: 5
   waveNumber: 0
-  totalEnemies: 0
+  totalEnemies: 1
 --- !u!4 &2131753426
 Transform:
   m_ObjectHideFlags: 0

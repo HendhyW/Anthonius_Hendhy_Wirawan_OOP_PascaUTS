@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
 
+    [SerializeField] public HealthComponent healthComponent;
+
     PlayerMovement playerMovement;
     Animator animator;
 

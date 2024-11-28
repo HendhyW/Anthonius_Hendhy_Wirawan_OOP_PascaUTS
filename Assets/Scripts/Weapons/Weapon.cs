@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
     //buat instance bullet 
     private Bullet CreateBullet()
     {
-        Debug.Log("Create Bullet");
+        // Debug.Log("Create Bullet");
         Bullet bulletInstance = Instantiate(bullet);
         bulletInstance.objectPool = objectPool;
         bulletInstance.transform.parent = transform;
@@ -62,7 +62,7 @@ public class Weapon : MonoBehaviour
     private void FixedUpdate()
     {
         // Debug.Log(timer);
-        Debug.Log(shootIntervalInSeconds);
+        // Debug.Log(shootIntervalInSeconds);
         if(timer > shootIntervalInSeconds && objectPool != null){
             Bullet bulletObject = objectPool.Get();
         

@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Enemy Prefabs")]
     public Enemy spawnedEnemy;
 
-    [SerializeField] private int minimumKillsToIncreaseSpawnCount = 2;
+    [SerializeField] public int minimumKillsToIncreaseSpawnCount = 2;
     public int totalKill = 0;
     public int totalKillWave = 0;
 
@@ -28,7 +28,18 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Start Spawning");
+        Debug.Log(StartCoroutine(SpawnEnemy()));
         gameObject.SetActive(true);
+        Debug.Log(StartCoroutine(SpawnEnemy()));
+    }
+
+    void Awake()
+    {
+        Debug.Log("Start Spawning");
+        Debug.Log(StartCoroutine(SpawnEnemy()));
+        gameObject.SetActive(true);
+        Debug.Log(StartCoroutine(SpawnEnemy()));
     }
 
     // Update is called once per frame
